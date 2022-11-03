@@ -1,0 +1,165 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(简体，中国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_MAIN, DIALOG
+    BEGIN
+    END
+
+    IDD_LIST, DIALOG
+    BEGIN
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_PLAY                ICON                    "icon\\play.ico"
+
+IDI_LOCAL               ICON                    "icon\\view-column.ico"
+
+IDI_PAUSE               ICON                    "icon\\pause.ico"
+
+IDI_PRE                 ICON                    "icon\\pre.ico"
+
+IDI_NEXT                ICON                    "icon\\next.ico"
+
+IDI_LOUD                ICON                    "icon\\highSound.ico"
+
+IDI_LOW                 ICON                    "icon\\lowSound.ico"
+
+IDI_MID                 ICON                    "icon\\midSound.ico"
+
+IDI_MUTE                ICON                    "icon\\closeSound.ico"
+
+IDI_LIST                ICON                    "icon\\list.ico"
+
+IDI_RANDOM              ICON                    "icon\\random.ico"
+
+IDI_SINGLE              ICON                    "icon\\single.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_MAIN AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_LIST AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_MAIN DIALOGEX 0, 0, 330, 81
+STYLE DS_SETFONT | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "MusicPlayer"
+FONT 14, "微软雅黑 Light", 290, 0, 0x86
+BEGIN
+    ICON            IDI_LOCAL,IDC_LOCAL,292,61,20,20,SS_NOTIFY
+    PUSHBUTTON      "Button2",IDC_PLAY,10,59,14,14,BS_ICON
+    CONTROL         "",IDC_Progress,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | TBS_NOTIFYBEFOREMOVE | WS_TABSTOP,7,37,268,16
+    LTEXT           "00.00/00.00",IDC_PROSHOW,284,36,44,12
+    ICON            IDI_PRE,IDC_PRE,38,61,20,20,SS_NOTIFY
+    ICON            IDI_NEXT,IDC_NEXT,63,61,20,20,SS_NOTIFY
+    CONTROL         "",IDC_VOLUME,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,148,62,100,15
+    LTEXT           "0",IDC_VOLSHOW,255,61,18,10
+    PUSHBUTTON      "Button1",IDC_VOLBUTTON,127,59,14,14,BS_ICON | BS_NOTIFY
+    LTEXT           "",IDC_NAMESHOW,8,0,275,13
+    PUSHBUTTON      "Button1",IDC_PLAYMODE,89,59,14,14,BS_ICON
+    LTEXT           "",IDC_Lyric,8,17,306,15
+    PUSHBUTTON      "Button1",IDC_LYRICBUTTON,107,59,16,14
+END
+
+IDD_LIST DIALOGEX 0, 0, 310, 177
+STYLE DS_SETFONT | DS_3DLOOK | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "MusicList"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LISTBOX         IDC_SONG_LIST,6,8,297,103,LBS_NOINTEGRALHEIGHT | NOT WS_BORDER | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,WS_EX_TRANSPARENT | WS_EX_CLIENTEDGE
+    PUSHBUTTON      "播放",IDC_PLAY_FOCUSED,109,158,50,14
+    PUSHBUTTON      "导入",IDC_IMPORT,180,158,50,14
+    PUSHBUTTON      "删除",IDC_DELETE,250,158,50,14
+END
+
+#endif    // 中文(简体，中国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

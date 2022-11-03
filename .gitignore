@@ -1,0 +1,13 @@
+Debug/
+Release/
+x64/
+icon_to_use/
+images/
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.aps
+*.sln
+*.md
+*.pdf
+.vs/
