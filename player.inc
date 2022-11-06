@@ -7,7 +7,7 @@ include winmm.inc
 include shlwapi.inc
 include Comdlg32.inc
 include msvcrt.inc
-
+include shell32.inc
 
 includelib	Comdlg32.lib
 includelib winmm.lib
@@ -16,6 +16,7 @@ includelib	user32.lib
 includelib	kernel32.lib
 includelib gdi32.lib
 includelib msvcrt.lib
+includelib shell32.lib
 
 ; function declare
 printf   proto C :ptr sbyte, :VARARG
@@ -42,16 +43,19 @@ changeVolumeIcon proto dialogHandle: dword, state: byte
 displaySongName proto dialogHandle : dword, curIndex : dword
 playModeControl proto dialogHandle : dword, mode : byte
 nextMode proto mode : byte
-importSingleSong proto dialogHandle:dword,tempPathAddr:dword,lpstrAddr:dword,fileOffset:word
+importSingleSong proto lpstrAddr:dword,fileOffset:dword
 checkSongNameSuffix proto nameAddr:dword,nameLength:dword
 checkSongName proto nameAddr:dword,nameLength:dword
 checkRepeatedSongName proto nameAddr:dword
 deleteSong proto dialogHandle:dword,deleteSongIndex:dword
 deleteSingleSong proto dialogHandle:dword,deleteSongIndex:dword
+chooseBatchPath proto dialogHandle:dword
+batchImportSongs proto dialogHandle:dword,folderPathAddr:dword
 readLrcFile proto dialogHandle:dword, index:dword
 displayLyric proto dialogHandle:dword
 changeLycState proto dialogHandle:dword
-
+firstPlay proto dialogHandle:dword
+displayJustImportedSong proto dialogHandle:dword,songNameAddr:dword 
 
 ;the struct of the song
 songStructure STRUCT
@@ -85,6 +89,10 @@ IDC_VOLUME EQU 1020
 IDC_VOLSHOW EQU 1021
 IDC_NAMESHOW EQU 1014
 IDC_PLAYMODE EQU 1015
+IDC_PATH_TIP EQU 1015
+IDC_PATH_EDITOR EQU 1016
+IDC_BATCH_IMPORT EQU 1012
+IDC_PATH EQU 1017
 IDC_Lyric EQU 1016
 IDC_LYRICBUTTON EQU 1017
 
@@ -97,6 +105,7 @@ IDI_LOUD EQU 126
 IDI_LIST EQU 132
 IDI_RANDOM EQU 133
 IDI_SINGLE EQU 134
+IDI_LYRIC EQU 135
 
 ; state of the play button
 _PAUSE EQU 0
@@ -126,7 +135,7 @@ playButtonState byte 0
 playMode byte 0
 
 ;song list
-songList songStructure 100 dup(<"0", "0">)
+songList songStructure 300 dup(<"0", "0">)
 
 ;total number of current songs 
 currentTotalSongNumber dword 0
@@ -138,6 +147,7 @@ currentSongIndex dword 0
 tempSongIndex dword 500
 focusedSongIndex dword 500
 
+;used to init the memory temporarily storing the song name 
 blankSongName BYTE 1000 DUP(0)
 
 ;judge there is a song focused or not
@@ -151,6 +161,21 @@ tempName2 BYTE 1000 dup(0)
 fileDialog OPENFILENAME<>
 lpstrFileNames BYTE 8000 DUP(0)
 tempPath BYTE 1000 DUP(0)
+
+;open the folder dialog
+folderDialog BROWSEINFO<>
+lpstrFolderNames BYTE 8000 DUP(0)
+importFolderPath BYTE 8000 DUP(0)
+
+;used to traverse all files under the selected folder
+findFileData WIN32_FIND_DATA<>
+catString BYTE "\",0
+folderSuffix BYTE "\*",0
+firstPath BYTE "D:\zfh\AssemblyProject\hw1\\*",0			;testMsg
+
+;used to get current path(which .exe file in)
+szFileName byte 8000 dup(0)
+scName byte "initMusic",0
 
 ; mci command
 getPositionCommand byte "status currentSong position", 0	
@@ -203,15 +228,20 @@ lrcFile byte 1000 dup(0)
 actualReadBytes dword 0
 lyricPreparation byte "，，，，，，",0
 
-;handle
+;handle of main dialog
 mainHandle dword 0
+listHandle dword 0
 
-;test
+;whether the list dialog is firstly inited
+listFirstInit dword 0
+
+;test message
 ansMsg BYTE "%d"
 changeRowMsg BYTE 0ah, 0dh, 0
-strMsg BYTE "%c"
+strMsg BYTE "%s"
 
 .data?
 ; the handle of the exec file itself
 hInstance HINSTANCE ?
 mediaCommand byte ?		;mciSendString
+hIn HINSTANCE ?
